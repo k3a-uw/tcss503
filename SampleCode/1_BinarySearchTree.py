@@ -2,7 +2,7 @@
 SAMPLE CODE USED TO DEMONSTRATE TREE IMPLEMENTATION IN PYTHON
   USED FOR WEEK 1: REVIEW OF TREES
 """
-
+from collections import deque
 
 class BinarySearchTreeDynamic:
 
@@ -13,6 +13,11 @@ class BinarySearchTreeDynamic:
             self.left = None
             self.right = None
 
+    def __str__(self):
+        q = deque()
+        if self.is_empty():
+            print("Empty")
+
     def __init__(self, max_children=2):
         self.root = None
 
@@ -21,29 +26,32 @@ class BinarySearchTreeDynamic:
 
     def insert(self, data):
         n = BinarySearchTreeDynamic.TreeNode(data)
+        curr = self.root
         if self.is_empty():
             self.root = n
-        else:
-            curr = self.root
-            parent = None
-            while True:
-                parent = curr
-                if n.data < curr.data:
+            return
+
+        while True:
+            if n.data < curr.data:
+                if curr.left is None:
+                    n.parent = curr
+                    curr.left = n
+                    return
+                else:
                     curr = curr.left
-                    if not curr:
-                        parent.left = n
-                        return
+            else:
+                if curr.right is None:
+                    n.parent = curr
+                    curr.right = n
+                    return
                 else:
                     curr = curr.right
-                    if not curr:
-                        parent.right = n
-                        return
 
     def search(self, data):
         curr = self.root
 
         while True:
-            if not curr:
+            if curr is None:
                 return None
             elif curr.data == data:
                 return data
@@ -89,6 +97,11 @@ class BinarySearchTreeSequential:
     def __get_idx_of_right__(self, index):
         return 2 * index + 2
 
+    def __get_idx_of_parent__(self, index):
+        """ Returns the parent of a given index.  Returns -1 for root."""
+        offset = 1 if index % 2 == 1 else 2
+        return (index - offset) // 2
+
     def is_empty(self):
         return self.data[0] is None
 
@@ -124,7 +137,7 @@ class BinarySearchTreeSequential:
 
 
 if __name__ == "__main__":
-    inputs = [10, 5, 20, 25, 20]
+    inputs = [10, 5, 20, 25, 15]
     bst = BinarySearchTreeDynamic()  # CREATE A TREE THAT RUNS WITH NODES
     for input in inputs:
         bst.insert(input)
@@ -140,12 +153,12 @@ if __name__ == "__main__":
 
         print(f"Testing for Output {output}: {rs}")
 
-    inputs = [10, 5, 20, 25, 20]
+    inputs = [10, 5, 20, 25, 15, 27, 26]
     bst = BinarySearchTreeSequential()  # CREATE A TREE THAT RUNS WITH NODES
     for input in inputs:
         bst.insert(input)
 
-    outputs = [(10, 0), (20, 2), (25, 5)]
+    outputs = [(10, 0), (20, 2), (25, 6)]
 
     for output in outputs:
         r = bst.search(output[0])
