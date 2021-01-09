@@ -7,7 +7,7 @@ __pycache__/
 *.so
 
 .idea/*
-
+sandbox/
 # Distribution / packaging
 .Python
 build/
