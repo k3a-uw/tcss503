@@ -101,6 +101,15 @@ class BinarySearchTreeKeyValue:
             else:
                 left_parent.right = leftmost_node.right
 
+    def change_key(self, old_key, new_key):
+        n = self._node_search(old_key)
+        if n is None:
+            raise KeyError(f"{old_key} is not a valid Key.")
+        else:
+            v = n.value
+            self.remove(old_key)
+            self.insert(new_key, v)
+
     def get_height(self):
         return self.__get_height_of_subtree(self.root)
 
@@ -135,6 +144,20 @@ class BinarySearchTreeKeyValue:
 
         return curr
 
+class Person:
+    def __init__(self, id, first_name, last_name, address):
+        self.id = id
+        self.first_name = first_name
+        self.last_name = last_name
+        self.address = address
+
+    def as_dict(self):
+        return {
+            "id": self.id,
+            "first_name": self.first_name,
+            "last_name": self.last_name,
+            "address": self.address
+        }
 
 if __name__ == "__main__":
     inputs = [
@@ -158,9 +181,10 @@ if __name__ == "__main__":
     bst["by_address"] = BinarySearchTreeKeyValue()
 
     for input_ in inputs:
-        bst["by_id"].insert(input_['id'], input_)
-        bst["by_first_name"].insert(input_['first_name'], input_)
-        bst["by_address"].insert(input_['address'], input_)
+        person = Person(input_['id'], input_['first_name'], input_['last_name'], input_['address'])
+        bst["by_id"].insert(input_['id'], person)
+        bst["by_first_name"].insert(input_['first_name'], person)
+        bst["by_address"].insert(input_['address'], person)
 
     # CREATE SOME SEARCH TESTS
     searches = {
@@ -176,7 +200,7 @@ if __name__ == "__main__":
     for key in bst.keys():
         for s, a in zip(searches[key], assertions):
             r = bst[key].search(s)
-            if r == a:
+            if r.as_dict() == a:
                 rs = "SUCCESS"
             else:
                 rs = f"FALSE expected {a} got {r}"
