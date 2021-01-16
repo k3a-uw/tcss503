@@ -62,6 +62,26 @@ class RedBlackBST:
         node.left.is_red = False
         node.right.is_red = False
 
+    def _right_is_red(self, node):
+        if node.right is None:
+            return False
+        else:
+            return node.right.is_red
+
+    def _left_is_red(self, node):
+        if node.left is None:
+            return False
+        else:
+            return node.left.is_red
+
+    def _left_left_is_red(self, node):
+        if node is None:
+            return False
+        else:
+            return self._left_is_red(node) and self._left_is_red(node.left)
+
+
+
     def _put(self, node, key, value):
         if node is None:
             return RedBlackBST.RedBlackNode(key, value)
@@ -78,11 +98,11 @@ class RedBlackBST:
         left_is_red = node.left is not None and node.left.is_red
         left_left_is_red = left_is_red and node.left.left is not None and node.left.left.is_red
 
-        if right_is_red and not left_is_red:
+        if self._right_is_red(node) and not self._left_is_red(node):
             node = self._rotate_left(node)
-        if left_left_is_red:
+        if self._left_left_is_red(node):
             node = self._rotate_right(node)
-        if left_is_red and right_is_red:
+        if self._left_is_red(node) and self._right_is_red(node):
             self._flip_colors(node)
 
         return node
