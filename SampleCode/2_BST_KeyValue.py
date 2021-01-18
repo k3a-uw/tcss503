@@ -1,26 +1,51 @@
 """
-SAMPLE CODE USED TO DEMONSTRATE TREE IMPLEMENTATION IN PYTHON
-  USED FOR WEEK 1: REVIEW OF TREES
+SAMPLE CODE USED TO DEMONSTRATE KEY/VALUE BST IMPLEMENTATION IN PYTHON
 """
 
 
 class BinarySearchTreeKeyValue:
+    """
+    Standard Key/Value Binary Search Tree
+
+    This basic class is a standard implementation of a Binary Search Tree that organizes values based on any comparable
+    Key.  Keys are unique, such that if you are inserting a value into an existing key, the value stored in the original
+    key slot will be replaced by the new value.
+    """
 
     class TreeNode:
+        """Basic Node for the Key/Value Binary Search Tree.
+
+        A basic node storing a left and right child (initialized to `None`), along with a key and value.
+        """
         def __init__(self, key, value):
-            self.parent = None
+            """Returns a newly constructed TreeNode with left and right links initialized to `None`
+            :param key: The unique key by which to retrieve the desired value.  Must be comparable.
+            :param value: The value in which to store in the Binary Search Tree.
+            """
+
             self.key = key
             self.value = value
             self.left = None
             self.right = None
 
     def __init__(self):
+        """Returns newly constructed `BinarySearchTreeKeyValue` with a root initialized to `None`.
+        """
         self.root = None
 
     def is_empty(self):
+        """Returns the state of emptiness of the BinarySearchTreeKeyValue.
+        :returns `True` if `self.root` is `None` (no Nodes exist in tree) and returns `False` otherwise."""
         return self.root is None
 
     def insert(self, key, value):
+        """Insert the provided `value` at the provided `key` in the `BinarySearchTreeKeyValue`
+        Assumes the key provided is a comparable object, and assumes uniqueness.  If the `Key` already exists in the
+        structure, the provided value will overwrite the previous value for this key.
+        :param key: The unique, comparable object by which to retrieve the desired value.
+        :param value: The value in which to store in the `BinarySearchTreeKeyValue`
+        :return: `None`
+        """
         n = BinarySearchTreeKeyValue.TreeNode(key, value)
         curr = self.root
         if self.is_empty():
@@ -44,10 +69,22 @@ class BinarySearchTreeKeyValue:
                     curr = curr.right
 
     def search(self, key):
+        """Search for the desired Key.
+        Uses binary search to locate and return the Value at the provided Key.  If the Key is not found, `search` will
+        return `None`, otherwise will return the Value stored at the key provided.
+        :param key: The unique key by which to retrieve the desired value.  Must be comparable.
+        :return: The Value at the Key provided, if the Key is not found, `search` will return `None`
+        """
         n = self._node_search(key)
         return n.value if n is not None else None
 
     def remove(self, key):
+        """Remove the desired Key from the `BinarySearchTreeKeyValue`.
+        Searches the `BinarySearchTreeKeyValue` for the provided key.  If found, removes the key from the tree.
+
+        :param key: The key desired to be removed from the tree.
+        :return: True if the key was found and removed, False otherwise.
+        """
 
         node = self._node_search(key)
 
@@ -101,7 +138,21 @@ class BinarySearchTreeKeyValue:
             else:
                 left_parent.right = leftmost_node.right
 
+        return True
+
     def change_key(self, old_key, new_key):
+        """Updates a Key in the tree from `old_key` to `new_key`.
+
+        If the old_key is not found change_key will raise a KeyError Exception.
+        If the new_key exists, the value at `new_key` will be replaced with the
+        value that currently exists in `old_key`
+
+        :param old_key: The original key that is desired to be changed.
+        :param new_key: The new key to which the change from old key is desired.
+        :return: `None`
+
+
+        """
         n = self._node_search(old_key)
         if n is None:
             raise KeyError(f"{old_key} is not a valid Key.")
@@ -111,9 +162,17 @@ class BinarySearchTreeKeyValue:
             self.insert(new_key, v)
 
     def get_height(self):
+        """ Returns the height of the tree.
+
+        :return: Integer height of the tree.  Returns zero if the tree is empty.
+        """
         return self.__get_height_of_subtree(self.root)
 
     def is_balanced(self):
+        """Returns True if the max difference in subtree height is less than two.  False otherwise.
+
+        :return: `True` if max difference in subtree height is less than two, `False` otherwise.
+        """
         if self.is_empty():
             return True
         else:
@@ -122,6 +181,11 @@ class BinarySearchTreeKeyValue:
             return abs(left_height - right_height) < 2
 
     def _get_height_of_subtree(self, node):
+        """ Private recursive function to determine the max height of a given subtree.
+
+        :param node: The node for which to measure the height.
+        :return: The height of the longest subtree under the provided node.
+        """
         if node is None:
             return 0
         else:
@@ -145,13 +209,28 @@ class BinarySearchTreeKeyValue:
         return curr
 
 class Person:
+    """Toy Person class used to store a few attributes of a Person.
+
+    This is a toy class used to demonstrate the different ways we can store data in a BST.
+    """
     def __init__(self, id, first_name, last_name, address):
+        """ Returns a newly formed Person object, with the following attributes: id, first & last names and address.
+
+        :param id: An ID by which to identify the person.
+        :param first_name: The person's first (or given) name.
+        :param last_name: The person's last (or family) name.
+        :param address: A string to represent an address of the person.
+        """
         self.id = id
         self.first_name = first_name
         self.last_name = last_name
         self.address = address
 
     def as_dict(self):
+        """ Returns the person as a dictionary object with attributes as keys.
+
+        :return: A dictionary representation of the `Person` object.
+        """
         return {
             "id": self.id,
             "first_name": self.first_name,
