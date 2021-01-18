@@ -162,11 +162,6 @@ class RedBlackBST:
         else:
             node.value = value
 
-        # CONTROL FOR NULL LINKS (NULL LINKS CAN BE CONSIDERED BLACK IN THIS CONTEXT
-        right_is_red = node.right is not None and node.right.is_red
-        left_is_red = node.left is not None and node.left.is_red
-        left_left_is_red = left_is_red and node.left.left is not None and node.left.left.is_red
-
         if self._right_is_red(node) and not self._left_is_red(node):
             node = self._rotate_left(node)
         if self._left_left_is_red(node):
