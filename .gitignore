@@ -8,6 +8,8 @@ __pycache__/
 
 .idea/*
 sandbox/
+Grading/
+
 # Distribution / packaging
 .Python
 build/
