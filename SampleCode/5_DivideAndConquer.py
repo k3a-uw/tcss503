@@ -1,4 +1,8 @@
 import numpy as np
+import time
+import pandas as pd
+import matplotlib.pyplot as plt
+import random
 
 
 def karatsuba(x, y):
@@ -23,6 +27,41 @@ def karatsuba(x, y):
     z2 = karatsuba(x_high, y_high)
 
     return z2 * 10 ** (2 * m) + (z1 - z2 - z0) * 10 ** m + z0
+
+
+def karat_compare(max_size, tests):
+    samples = []
+    test_sizes = np.linspace(1,max_size, tests).astype(int)
+    standard_results = []
+    karatsuba_results = []
+    for test_size in test_sizes:
+        x_str = ''
+        y_str = ''
+        for x in range(test_size):
+            x_str += str(random.randint(0,9))
+            y_str += str(random.randint(0,9))
+        samples.append((int(x_str), int(y_str)))
+    print(f"Samples Generated: {len(samples)}, with max size: {max_size}")
+
+    for sample, test_size in zip(samples, test_sizes):
+        print(f"Attempting numbers of 10^{test_size}")
+        x = sample[0]
+        y = sample[1]
+
+        t_start = time.perf_counter()
+        r = x * y
+        standard_results.append(time.perf_counter() - t_start)
+
+        t_start = time.perf_counter()
+        r = karatsuba(x, y)
+        karatsuba_results.append(time.perf_counter() - t_start)
+
+    plt.plot(test_size, standard_results, label="python native")
+    plt.plot(test_size, karatsuba_results, label="karatsuba")
+    plt.xlabel("10^x")
+    plt.ylabel("Seconds")
+    plt.legend()
+    plt.show()
 
 
 def naive_matrix_multiplication_lists(a, b):
@@ -63,6 +102,8 @@ def naive_matrix_multiplication_np(a,b):
     return c
 
 
+
+
 if __name__ == "__main__":
     a = [[1, 2, 5],
          [3, 4, 6]]
@@ -81,3 +122,4 @@ if __name__ == "__main__":
 
     expected_results = np.array([[24, 27], [49, 56]])
     print("Expected Results:\n", expected_results)
+
