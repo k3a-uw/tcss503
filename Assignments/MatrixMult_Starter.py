@@ -14,14 +14,14 @@ def recursive_matrix_mult(A, B):
 
     n = a.shape[0] // 2
     a0 = a[:n, :n]  # UPPER LEFT
-    a1 = a[:n, n:]   # UPPER RIGHT
-    a2 = a[n:, :n]   # LOWER LEFT
-    a3 = a[n:, n:]    # LOWER RIGHT
+    a1 = a[:n, n:]  # UPPER RIGHT
+    a2 = a[n:, :n]  # LOWER LEFT
+    a3 = a[n:, n:]  # LOWER RIGHT
 
     b0 = b[:n, :n]  # UPPER LEFT
-    b1 = b[:n, n:]   # UPPER RIGHT
-    b2 = b[n:, :n]   # LOWER LEFT
-    b3 = b[n:, n:]    # LOWER RIGHT
+    b1 = b[:n, n:]  # UPPER RIGHT
+    b2 = b[n:, :n]  # LOWER LEFT
+    b3 = b[n:, n:]  # LOWER RIGHT
 
     c0 = recursive_matrix_mult(a0, b0) + recursive_matrix_mult(a1, b2)
     c1 = recursive_matrix_mult(a0, b1) + recursive_matrix_mult(a1, b3)
@@ -48,4 +48,6 @@ def basic_smoke_test():
     assert(np.array_equal(result, expected))
     print("Second test passed")
 
-basic_smoke_test()
+
+if __name__ == "__main__":
+    basic_smoke_test()
