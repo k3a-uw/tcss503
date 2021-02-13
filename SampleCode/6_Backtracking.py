@@ -110,6 +110,8 @@ if __name__ == "__main__":
     g.m_color(colors)
 
     big_g = MatrixGraph(10)
+    # BELOW IS A LINK TO THE VIZ REPRESENTATION OF THE BELOW GRAPH
+    # https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/Petersen_graph_3-coloring.svg/220px-Petersen_graph_3-coloring.svg.png
     big_g.adj_matrix = np.array([
         [0, 1, 0, 0, 1, 1, 0, 0, 0, 0],
         [1, 0, 1, 0, 0, 0, 1, 0, 0, 0],
@@ -123,7 +125,7 @@ if __name__ == "__main__":
         [0, 0, 0, 0, 1, 0, 1, 1, 0, 0]
     ])
 
-    big_colors = ['green','red','white']
+    big_colors = ['green', 'red', 'white']
     big_g.m_color(big_colors)
     # SOLVE THE N QUEENS PROBLEM
     b = NQueens(size=10)
