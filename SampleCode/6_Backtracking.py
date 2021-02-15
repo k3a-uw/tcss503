@@ -127,6 +127,9 @@ if __name__ == "__main__":
 
     big_colors = ['green', 'red', 'white']
     big_g.m_color(big_colors)
+
+
+
     # SOLVE THE N QUEENS PROBLEM
     b = NQueens(size=10)
     b.find_solution(find_all=True)
