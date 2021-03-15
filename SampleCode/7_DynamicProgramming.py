@@ -98,13 +98,18 @@ def knapsack_recovery(solution, weights, values):
     result = []
 
     curr_val = solution[curr_row, curr_col]
+
     while curr_val > 0:
-        if curr_val == solution[curr_row - 1, curr_col]:
-            curr_row -= 1
-        else:
+        if curr_row == 0:
+            result.append(curr_row)
+            break
+        elif curr_val != solution[curr_row - 1, curr_col]:
             result.append(curr_row)
             curr_val = curr_val - values[curr_row]
             curr_col = curr_col - weights[curr_row]
+            curr_row -= 1
+        else:
+            curr_row -= 1
 
     return result
 
@@ -113,21 +118,27 @@ def knapsack_recovery(solution, weights, values):
 
 if __name__ == "__main__":
     # FIB DEMO:
-    for i in range(10):
-        print(fib(i))
-    for i in range(50):
-        print(fib_dp(i))
+    # for i in range(10):
+    #     print(fib(i))
+    # for i in range(50):
+    #     print(fib_dp(i))
 
 # JOB SELECTION DEMO
-    p = [15, 46, 43, 51, 92, 72, 61, 41, 39, 40, 82, 79, 42, 51]
-    days_worked, dollars = job_selection_no_recover(p)
-
-    print(f"By Working days: {days_worked} you can earn {dollars}")
+#     p = [15, 46, 43, 51, 92, 72, 61, 41, 39, 40, 82, 79, 42, 51]
+#     days_worked, dollars = job_selection_no_recover(p)
+#
+#     print(f"By Working days: {days_worked} you can earn {dollars}")
 
     #
     w = [1,4,2,6,7,4,1,3]
-    v = [0,1,5,6,7,2,4,1]
+    v = [100,1,5,6,7,2,4,1]
     c = 13
+    solution = knapsack(w,v,c)
+
+
+    w = [5,4,1]
+    v = [150, 100, 10]
+    c = 10
     solution = knapsack(w,v,c)
 
     print(solution)
