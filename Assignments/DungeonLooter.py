@@ -53,7 +53,7 @@ class Chest:
 
     def __init__(self, n=10):
         self.contents = []
-        for i in range(10):
+        for i in range(n):
             self.contents.append(Item.generate_random_item())
 
     def __str__(self):
