@@ -44,7 +44,7 @@ def karat_compare(max_size, tests):
     print(f"Samples Generated: {len(samples)}, with max size: {max_size}")
 
     for sample, test_size in zip(samples, test_sizes):
-        print(f"Attempting numbers of 10^{test_size}")
+        print(f"Attempting numbers of 10^{test_size} \r", end="")
         x = sample[0]
         y = sample[1]
 
@@ -56,8 +56,9 @@ def karat_compare(max_size, tests):
         r = karatsuba(x, y)
         karatsuba_results.append(time.perf_counter() - t_start)
 
-    plt.plot(test_size, standard_results, label="python native")
-    plt.plot(test_size, karatsuba_results, label="karatsuba")
+    print("\nDONE")
+    plt.plot(test_sizes, standard_results, label="python native")
+    plt.plot(test_sizes, karatsuba_results, label="karatsuba")
     plt.xlabel("10^x")
     plt.ylabel("Seconds")
     plt.legend()
