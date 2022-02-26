@@ -177,6 +177,23 @@ class SudokuSolver:
         :param board: The current iteration of the board in order to solve.
         :return: True if the board is completed/solved, False otherwise.
         """
+        """
+        1  2  4 |  5 6 7 | 8 8 8 |
+        X  3  6 
+        """
+
+        # What row/col is next?
+        row, col = self.get_next_cell(board)
+
+        for i in range(9):
+            r = self.can_place(board,row=1,col=0, 3)
+            if r:
+                new_board = self.board.copy()
+                new_board[row][col] = i
+                is_solved = self._solve(new_board)
+
+                if is_solved:
+                    return True
         pass
 
     # STUDENT TO IMPLEMENT (BUT CAN USE THE SAMPLE CODE AS IS BELOW)  SIGNATURE MUST REMAIN FOR SUBMISSION.
