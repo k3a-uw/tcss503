@@ -66,7 +66,7 @@ class Chest:
             tot_wgt += i.weight
             tot_val += i.value
             x += 1
-        return f"Chest: Item Count={X}, Total Value={tot_val}, Total Weight={tot_wgt}\n{ret_str}"
+        return f"Chest: Item Count={x}, Total Value={tot_val}, Total Weight={tot_wgt}\n{ret_str}"
 
     def remove(self, item):
         """
@@ -79,6 +79,7 @@ class Chest:
             return True
         except ValueError as e:
             return False
+
 
 class Item:
     """
@@ -152,7 +153,7 @@ class Item:
 
 class Game:
     """
-    The controlller for the game controlling the different Coin Denominations and maintaining the states of chests and
+    The controller for the game controlling the different Coin Denominations and maintaining the states of chests and
     acting as the "shop" that can also sell the items for the Adventurer.
     """
     COINS = {
