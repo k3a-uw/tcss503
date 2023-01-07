@@ -174,5 +174,3 @@ if __name__ == "__main__":
         bst.insert(i)
 
     print(f"How bloated is it: BST Contains {bst.count} records in an array of size {len(bst.data)}")
-
-    print("Here is a change, cool.")
