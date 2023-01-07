@@ -5,14 +5,14 @@ import random     # USED FOR THE BOARD GENERATOR
 class SudokuSolver:
     """ A Python implementation of a SudokoSolver, uses a backtracking method to solve a Sudoku Puzzle
     with bruteforce.  For each empty cell, the algorithm will attempt to place a digit and them move to
-    the next cell.  If a dead cell is found (no digits can be placed). The prevoiusly placed digit will
+    the next cell.  If a dead cell is found (no digits can be placed). The previously placed digit will
     be changed."""
 
     def __init__(self, section_size=3):
         """
         Creates a new "empty" Sudoku Board (an empty cell is represented with -1)
         :param section_size: The size of the inner section of a Sudoku Board.  For example, a standard board contains
-        9 squares of 3x3 each.  Therefore the "section_size" is 3.  A section_size of 4 would be a 4x4 board.
+        9 squares of 3x3 each.  Therefor the "section_size" is 3.  A section_size of 4 would be a 4x4 board.
         """
 
         if section_size < 2:
