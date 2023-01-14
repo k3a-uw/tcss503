@@ -13,7 +13,7 @@ class RedBlackBST:
             self.value = value
             self.left = None
             self.right = None
-            self.is_red = True  # NEW NODES ARE ALWAYS RED IN THIS IMPLEMENTATION TO DEFAULT THEM TO BE SO.
+            self.is_red = True  # NEW NODES ARE ALWAYS RED IN THIS IMPLEMENTATION SO DEFAULT THEM TO REDs
 
         def __str__(self):
             """Returns a string representation of a node, including the ids and colors of its left and right links.

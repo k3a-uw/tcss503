@@ -158,10 +158,10 @@ class RedBlackBST:
         :return: `None`
         """
 
-        self.root = self._put(self.root, key, value)
+        self.root = self._put_r(self.root, key, value)
         self.root.is_red = False
 
-    def _put(self, node, key, value):
+    def _put_r(self, node, key, value):
         """A recursive call to insert a new value into the structure using the standard Red-Black insertion rules.
         Base Case: The Node provided is None, in which case, create a new `RedBlackNode` and return.
         Recursive Case: If the insertion key is equal to node.key. replace the value and return (special case).  If the
@@ -178,9 +178,9 @@ class RedBlackBST:
             return RedBlackBST.RedBlackNode(key, value)
 
         if key < node.key:
-            node.left = self._put(node.left, key, value)
+            node.left = self._put_r(node.left, key, value)
         elif key > node.key:
-            node.right = self._put(node.right, key, value)
+            node.right = self._put_r(node.right, key, value)
         else:
             node.value = value
 
@@ -247,6 +247,7 @@ def test_bst(bst):
     r = bst.search(100)
     result = "PASSED" if r == 'one hundred' else f"Failed, expected 'one hundred', received {r}"
     print(f"Test repeat Keys: {result}")
+
 
 if __name__ == "__main__":
     bst = RedBlackBST()
