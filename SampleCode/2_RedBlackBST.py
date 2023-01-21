@@ -203,6 +203,15 @@ class Person:
         }
 
 if __name__ == "__main__":
+
+    bst = RedBlackBST()
+    for val in ['b', 'a', 'c', 'd']:
+        bst.insert(val, val)
+
+
+
+
+
     inputs = [
         {'id': 1, 'first_name': 'Eilidh', 'last_name': 'Kenny', 'address': '123 Fake St'},
         {'id': 2, 'first_name': 'Herman', 'last_name': 'Nguyen', 'address': '456 Easy St'},
