@@ -44,7 +44,7 @@ def karat_compare(max_size, tests):
     print(f"Samples Generated: {len(samples)}, with max size: {max_size}")
 
     for sample, test_size in zip(samples, test_sizes):
-        print(f"Attempting numbers of 10^{test_size} \r", end="")
+        print(f"Attempting numbers of 10^{test_size}")
         x = sample[0]
         y = sample[1]
 
@@ -56,9 +56,8 @@ def karat_compare(max_size, tests):
         r = karatsuba(x, y)
         karatsuba_results.append(time.perf_counter() - t_start)
 
-    print("\nDONE")
-    plt.plot(test_sizes, standard_results, label="python native")
-    plt.plot(test_sizes, karatsuba_results, label="karatsuba")
+    plt.plot(test_size, standard_results, label="python native")
+    plt.plot(test_size, karatsuba_results, label="karatsuba")
     plt.xlabel("10^x")
     plt.ylabel("Seconds")
     plt.legend()
@@ -103,6 +102,60 @@ def naive_matrix_multiplication_np(a,b):
     return c
 
 
+def dist(p1, p2):
+    return (p1[0] - p2[0])**2 + (p1[1] - p2[1])**2
+
+
+def closet_pair_bf(p):
+    min_dist = None
+    for i in range(len(p)):
+        for j in range(i+1, len(p)):
+            curr_dist = dist(p[i], p[j])
+            if not min_dist or min_dist > curr_dist:
+                min_dist = curr_dist
+                min_points = (p[i], p[j])
+    return min_dist, min_points
+
+def closest_pair_dc(p):
+    if len(p) <= 3:
+        return closet_pair_bf(p)
+
+    mid = len(p) // 2
+    dl = closest_pair_dc(p[:mid])
+    dr = closest_pair_dc(p[mid:])
+
+    if dl[0] < dr[0]:
+        d = dl[0]
+        min_points = dl[1]
+    else:
+        d = dr[0]
+        min_points = dr[1]
+
+    m = p[mid][0]
+
+    S = []
+    for point in p:
+        if abs(point[0] - m) < d:
+            S.append(point)
+
+    S.sort(key=lambda y: y[1])
+    min_dist = d
+    for i in range(len(S)):
+        for j in range(i+1, len(S)):
+            if S[j][1]-S[i][1] >= d:  # WE ARE COMPARING TOO HIGH, GO TO NEXT POINT
+                break
+            curr_dist = dist(S[i], S[j])
+            if curr_dist < min_dist:
+                min_dist = curr_dist
+                min_points = (S[i], S[j])
+
+    return min_dist, min_points
+
+def clostest_pair(p):
+    dist, the_points = closest_pair_dc(sorted(p, key=lambda x: x[0]))
+    return dist**0.5, the_points
+
+
 
 
 if __name__ == "__main__":
@@ -124,3 +177,19 @@ if __name__ == "__main__":
     expected_results = np.array([[24, 27], [49, 56]])
     print("Expected Results:\n", expected_results)
 
+
+points = [(1, 10),
+          (5, 12),
+          (7, 43),
+          (2, 2),
+          (6, 6),
+          (8, 9),
+          (0, 10),
+          (1, 3),
+          (2, 5),
+          (6, 10),
+          (19, 20)]
+
+
+x, p = clostest_pair(points)
+print(f"The min dist = {x} in points {p[0]} and {p[1]}")
