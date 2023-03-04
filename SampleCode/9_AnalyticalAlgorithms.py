@@ -18,8 +18,11 @@ def generate_data(centers, points_per, std_dev, seed=None):
 
     return pd.DataFrame({'x': x, 'y': y})
 
-def draw_plot(df, colors='grey'):
-    plt.scatter(df.iloc[:, 0], df.iloc[:, 1], c=colors, cmap='brg')
+def draw_plot(df, colors=None):
+    if colors is not None:
+        plt.scatter(df.iloc[:, 0], df.iloc[:, 1], c=colors, cmap='brg')
+    else:
+        plt.scatter(df.iloc[:, 0], df.iloc[:, 1])
     plt.show()
 
 def draw_plot_with_predicts(train, colors, test, predictions):
@@ -30,7 +33,7 @@ def draw_plot_with_predicts(train, colors, test, predictions):
 
 df = generate_data(centers=[10, 15, 20], points_per=10, std_dev=2, seed=10)
 draw_plot(df)
-model = KMeans(n_clusters=3)
+model = KMeans(n_clusters=3, n_init=10)
 model.fit(df)
 plt.scatter(df.x, df.y, c=model.labels_, cmap='brg')
 plt.show()
