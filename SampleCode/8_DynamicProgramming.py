@@ -31,11 +31,12 @@ def subset_recover(solution, values):
         return []
 
     while curr_tot < target:
-        # IF THE VALUE OF THE PREVIOUS ROW IS FALSE
-        # INCLUDE THE VALUE OF THE ROW AND MOVE OVER
+        # IF AT THE FIRST ROW, TAKE THE VALUE AUTOMATICALLY
         if curr_row == 0:
             results.append(values[curr_row])
             curr_tot += values[curr_row]
+        # IF THE VALUE OF THE PREVIOUS ROW IS FALSE
+        # INCLUDE THE VALUE OF THE ROW AND MOVE OVER
         if not solution[curr_row - 1, curr_col]:
             results.append(values[curr_row])
             curr_tot += values[curr_row]

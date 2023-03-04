@@ -40,6 +40,10 @@ new_labels = model.predict(new_point)
 
 draw_plot_with_predicts(df, model.labels_, new_point, new_labels)
 
+def cosine_distance(x1, x2):
+    x1_magnitude = np.sqrt(np.sum(np.square(x1)))
+    x2_magnitude = np.sqrt(np.sum(np.square(x2)))
+    return 1 - np.dot(x1, x2) / (x1_magnitude * x2_magnitude)
 
 import seaborn as sns
 
