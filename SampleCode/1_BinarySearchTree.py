@@ -136,6 +136,8 @@ class BinarySearchTreeSequential:
                 return None
 
 
+
+
 if __name__ == "__main__":
     inputs = [10, 5, 20, 25, 15]
     bst = BinarySearchTreeDynamic()  # CREATE A TREE THAT RUNS WITH NODES
