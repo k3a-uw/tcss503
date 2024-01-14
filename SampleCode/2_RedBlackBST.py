@@ -205,9 +205,12 @@ class Person:
 if __name__ == "__main__":
 
     bst = RedBlackBST()
-    for val in ['b', 'a', 'c', 'd']:
+
+    # POPULATE INITIAL STRUCTURE
+    for val in ['b', 'a', 'c', 'f', 'x', 'e', 'l']:
         bst.insert(val, val)
 
+    bst.insert('d','d')
 
 
 
