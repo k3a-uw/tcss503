@@ -123,48 +123,50 @@ class Graph:
 
             yield curr
 
+
+
     def is_acyclic(self):
         """Performs a complete search of the graph, halting when a cycle is found or when all vertices in
          the graph have been traversed.
          :returns: True if no cycle is detected, false otherwise. An empty graph will return True"""
 
-        if not self.vertices:
-            return True
-
         # VERTICES TO TRAVERSE FROM
-        white_vertices = list(self.vertices.keys())
+        white_vertices = set(self.vertices.values())
 
         # VERTICES THAT HAVE ALL BEEN VISITED
-        black_vertices = []
+        black_vertices = set()
 
         # VERTICES THAT ARE ON THE CURRENT TRAVERSAL PATH
-        grey_vertices = []
+        grey_vertices = set()
         while white_vertices:
-            start = white_vertices.pop()
-            stack = [self.vertices[start]]
-            while stack:
-                curr = stack.pop()
+            # INITIALIZE A NEW STACK WITH THE NEXT WHITE VERTEX
+            dfs_stack = [white_vertices.pop()]
+            while dfs_stack:
+                curr = dfs_stack.pop()
 
-                if curr.key in white_vertices:
-                    white_vertices.remove(curr.key)
+                if curr in white_vertices:
+                    white_vertices.remove(curr)
 
-                grey_vertices.append(curr.key)
+                # BECAUSE IT IS A SET WE DON'T NEED TO WORRY ABOUT ADDING DUPES
+                grey_vertices.add(curr)
 
-                # HOW MANY NEIGHBORS TO TRAVERSE
+                # LOOK AT ALL NEIGHBORS, HOLD ANY THAT NEED TRAVERSED
                 trav_neighbors = []
                 for edge in curr.get_edges():
-                    if edge.target.key in grey_vertices: # we found a cycle!
+                    if edge.target in grey_vertices: # we found a cycle!
                         return False
-                    elif edge.target.key in white_vertices:
+                    elif edge.target in white_vertices:
                         trav_neighbors.append(edge.target)
 
+                # IF ANY NEIGHBORS, ADD CURRENT BACK TO THE STACK SO IT WILL BE
+                # LOOKED AT AGAIN AFTER THE DFS COMPLETES FOR ITS CHILDREN
                 if len(trav_neighbors) > 0:
-                    stack.append(curr)
+                    dfs_stack.append(curr)
                     for n in trav_neighbors:
-                        stack.append(n)
-                else:
-                    grey_vertices.remove(curr.key)
-                    black_vertices.append(curr.key)
+                        dfs_stack.append(n)
+                else:  # OTHERWISE (NO TRAVERSABLE NEIGHBORS, SO MOVE IT TO BLACK
+                    grey_vertices.remove(curr)
+                    black_vertices.add(curr)
 
         # We have traversed the entire tree without a cycle.
         return True
@@ -212,4 +214,25 @@ if __name__ == "__main__":
     g3 = Graph()
     g3.add_edge('a','a')
     print(f"Self loop graph is_acyclic?:{g3.is_acyclic()}")
+
+    # SAME GRAPH AS SLIDES FOR CYCLE DETECTION
+    g4 = Graph()
+    baked_order = ['d','c','b','a','e','f']
+    for v in baked_order:
+        g4.add_vertex(v)
+
+    g4.add_edge('a','b')
+    g4.add_edge('b', 'c')
+    g4.add_edge('b', 'd')
+    g4.add_edge('b', 'e')
+    g4.add_edge('c', 'd')
+    g4.add_edge('d', 'e')
+    g4.add_edge('e', 'f')
+
+
+    print(f"Is there a cycle, there shouldn't be, this should be True... and it is {g4.is_acyclic2()}")
+
+    g4.add_edge('c', 'a')
+
+    print(f" Is there a cycle, there is now... so this should be False...? {g4.is_acyclic2()}")
 

@@ -144,7 +144,6 @@ class RedBlackBST:
             else:
                 curr = curr.right
 
-        return curr
 
 ########### THE BELOW SECTION IS ONLY FOR REFERENCE AS A FUNCTIONING RECURSIVE IMPLEMENTATION
 
