@@ -230,9 +230,9 @@ if __name__ == "__main__":
     g4.add_edge('e', 'f')
 
 
-    print(f"Is there a cycle, there shouldn't be, this should be True... and it is {g4.is_acyclic2()}")
+    print(f"Is there a cycle, there shouldn't be, this should be True... and it is {g4.is_acyclic()}")
 
     g4.add_edge('c', 'a')
 
-    print(f" Is there a cycle, there is now... so this should be False...? {g4.is_acyclic2()}")
+    print(f" Is there a cycle, there is now... so this should be False...? {g4.is_acyclic()}")
 
