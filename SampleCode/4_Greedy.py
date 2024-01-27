@@ -63,13 +63,13 @@ def local_hill_climbing(the_function, start, alpha=0.5, maximize=True, max_itera
             right_result = right_result * -1
 
         if right_result >= left_result:
-            if right_result <= curr_result:  # LOCAL MAXIMA
+            if right_result <= curr_result:  # LOCAL MAXIMA/MINIMA
                 break
             else:  # KEEP MOVING RIGHT
                 curr_value += alpha
                 iterations += 1
         else:  # LEFT IS BIGGER THAN RIGHT
-            if left_result <= curr_result:  # LOCAL MAXIMA
+            if left_result <= curr_result:  # LOCAL MAXIMA/MINIMA
                 break
             else:
                 curr_value -= alpha
@@ -84,6 +84,7 @@ def local_hill_climbing(the_function, start, alpha=0.5, maximize=True, max_itera
 def parabola(x):
     return -(x-5)**2 + 3
 
+
 def step_function(x):
     """
     This function makes a plateau that we can test edge cases.  From -inf to 1, it returns x=y,  Then flattens from
@@ -97,66 +98,67 @@ def step_function(x):
         return -x+6
 
 
-print("===TESTING PARABOLA ====")
+if __name__ == '__main__':
+    print("===TESTING PARABOLA ====")
 
-# START WITH THE PARABOLA JUST TO SEE IF WE GET THE LOCAL MAXIMA WITH DIFFERENT STARTS
-tests = [(0, "LEFT OF MAX POINT"),
-         (10, "RIGHT OF MAX POINT"),
-         (5, "EXACTLY ON MAX POINT"),
-         (4.7, "LESS THAN AN ALPHA AWAY")]
+    # START WITH THE PARABOLA JUST TO SEE IF WE GET THE LOCAL MAXIMA WITH DIFFERENT STARTS
+    tests = [(0, "LEFT OF MAX POINT"),
+             (10, "RIGHT OF MAX POINT"),
+             (5, "EXACTLY ON MAX POINT"),
+             (4.7, "LESS THAN AN ALPHA AWAY")]
 
-x = 0
-for test in tests:
-    start = test[0]
-    x += 1
-    results = local_hill_climbing(parabola, start)
-    print(f"TEST{x}: {test[1]}")
-    print(f"Starting at {start}, the max result is {results[1]} given an input value of {results[0]}\n")
-
-
-# ADDITIONAL EXPERIMENTS
-start = 4.7
-results = local_hill_climbing(parabola, start, alpha=0.001, max_iterations=10000)
-print("Final Test: START LESS THAN AN ALPHA AWAY WITH LOWER ALPHA AND HIGHER ITERATIONS")
-print(f"Starting at {start}, the max result is {results[1]} given an input value of {results[0]}\n\n")
+    x = 0
+    for test in tests:
+        start = test[0]
+        x += 1
+        results = local_hill_climbing(parabola, start)
+        print(f"TEST{x}: {test[1]}")
+        print(f"Starting at {start}, the max result is {results[1]} given an input value of {results[0]}\n")
 
 
-
-print("===TESTING STEP FUNCTIONS ====")
-
-# STEP FUNCTION TESTING
-tests = [(-1, "LEFT OF LEFT SHOULDER, Max:True", True),
-         (-1, "LEFT OF LEFT SHOULDER, Max:False", False),
-         (1, "EXACTLY ON LEFT SHOULDER, Max:True", True),
-         (1, "EXACTLY ON LEFT SHOULDER, Max:False", False),
-         (3, "MID-PLATEAU Max=True", True),
-         (3, "MIDP-LATEAU Max=True", False),
-         (5, "EXACTLY ON RIGHT SHOULDER, Max:True", True),
-         (5, "EXACTLY ON RIGHT SHOULDER, Max:False", False),
-         (10, "RIGHT OF RIGHT SHOULDER, Max:True", True),
-         (10, "RIGHT OF RIGHT SHOULDER, Max:False", False)
-         ]
-
-x = 0
-for test in tests:
-    start = test[0]
-    x += 1
-    max = test[2]
-    results = local_hill_climbing(step_function, start, maximize=max)
-    print(f"TEST{x}: {test[1]}")
-    print(f"Starting at {start}, the result is {results[1]} given an input value of {results[0]}\n")
+    # ADDITIONAL EXPERIMENTS
+    start = 4.7
+    results = local_hill_climbing(parabola, start, alpha=0.001, max_iterations=10000)
+    print("Final Test: START LESS THAN AN ALPHA AWAY WITH LOWER ALPHA AND HIGHER ITERATIONS")
+    print(f"Starting at {start}, the max result is {results[1]} given an input value of {results[0]}\n\n")
 
 
 
+    print("===TESTING STEP FUNCTIONS ====")
+
+    # STEP FUNCTION TESTING
+    tests = [(-1, "LEFT OF LEFT SHOULDER, Max:True", True),
+             (-1, "LEFT OF LEFT SHOULDER, Max:False", False),
+             (1, "EXACTLY ON LEFT SHOULDER, Max:True", True),
+             (1, "EXACTLY ON LEFT SHOULDER, Max:False", False),
+             (3, "MID-PLATEAU Max=True", True),
+             (3, "MID-PLATEAU Max=True", False),
+             (5, "EXACTLY ON RIGHT SHOULDER, Max:True", True),
+             (5, "EXACTLY ON RIGHT SHOULDER, Max:False", False),
+             (10, "RIGHT OF RIGHT SHOULDER, Max:True", True),
+             (10, "RIGHT OF RIGHT SHOULDER, Max:False", False)
+             ]
+
+    x = 0
+    for test in tests:
+        start = test[0]
+        x += 1
+        max = test[2]
+        results = local_hill_climbing(step_function, start, maximize=max)
+        print(f"TEST{x}: {test[1]}")
+        print(f"Starting at {start}, the result is {results[1]} given an input value of {results[0]}\n")
 
 
-change_making_greedy(30, [1, 15, 25])
-x = change_making_dynamic(30, [1, 15, 25])
-print(f"Basic, 15, 15 {x}")
 
-y = change_making_dynamic(14, [7, 13, 25])
-print(f"Partial Gaps, 7,7: {y}")
 
-z = change_making_dynamic(15, [7, 13, 25])
-print(f"Should Be None: {z}")
+
+    change_making_greedy(30, [1, 15, 25])
+    x = change_making_dynamic(30, [1, 15, 25])
+    print(f"Basic, 15, 15 {x}")
+
+    y = change_making_dynamic(14, [7, 13, 25])
+    print(f"Partial Gaps, 7,7: {y}")
+
+    z = change_making_dynamic(15, [7, 13, 25])
+    print(f"Should Be None: {z}")
 
