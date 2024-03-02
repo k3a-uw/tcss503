@@ -131,5 +131,5 @@ if __name__ == "__main__":
 
 
     # SOLVE THE N QUEENS PROBLEM
-    b = NQueens(size=10)
+    b = NQueens(size=15)
     b.find_solution(find_all=True)

@@ -16,11 +16,11 @@ def change_making_dynamic(target, denoms):
     """
     data = [None] * (target+1)
     data[0] = []
-    for i in range(1, target+1):
+    for t in range(1, target+1):
         # LOOP THROUGH EACH VALUE UP TO THE TARGET
         curr_min = None
         for denom in denoms:
-            back_val = i - denom
+            back_val = t - denom
             if back_val >= 0:  # IF YOU ARE ABLE TO SUBTRACT THE CURRENT DENOM FROM THE VALUE.
                 if data[back_val] is None:
                     continue # PREVIOUS CALCULATION IS INVALID AND CANNOT BE USED.
@@ -28,9 +28,9 @@ def change_making_dynamic(target, denoms):
                 curr.append(denom)
                 if curr_min is None or len(curr) < len(curr_min):
                     curr_min = curr
-        data[i] = curr_min
+        data[t] = curr_min
 
-    return(data[target])
+    return data[target]
 
 
 def local_hill_climbing(the_function, start, alpha=0.5, maximize=True, max_iterations=1000):
@@ -156,7 +156,7 @@ if __name__ == '__main__':
     x = change_making_dynamic(30, [1, 15, 25])
     print(f"Basic, 15, 15 {x}")
 
-    y = change_making_dynamic(14, [7, 13, 25])
+    y = change_making_dynamic(10, [1, 3, 7])
     print(f"Partial Gaps, 7,7: {y}")
 
     z = change_making_dynamic(15, [7, 13, 25])
