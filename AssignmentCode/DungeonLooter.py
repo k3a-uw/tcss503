@@ -14,6 +14,7 @@ class Adventurer:
 
     def show_inventory(self):
         """
+        *** STUDENT TO IMPLEMENT ***
         Shows Inventory
         :return: A String representation of the players inventory.
         """
@@ -66,12 +67,12 @@ class Chest:
             tot_wgt += i.weight
             tot_val += i.value
             x += 1
-        return f"Chest: Item Count={x}, Total Value={tot_val}, Total Weight={tot_wgt}\n{ret_str}"
+        return f"Chest: Item Count={X}, Total Value={tot_val}, Total Weight={tot_wgt}\n{ret_str}"
 
     def remove(self, item):
         """
         Removes the provided item from the chest.
-        :param item: The item object that should be remove from the list.
+        :param item: The item object that should be removed from the list.
         :return: True if item was found/removed, False otherwise
         """
         try:
@@ -153,7 +154,7 @@ class Item:
 
 class Game:
     """
-    The controller for the game controlling the different Coin Denominations and maintaining the states of chests and
+    The controller for the game handling the different Coin Denominations and maintaining the states of chests and
     acting as the "shop" that can also sell the items for the Adventurer.
     """
     COINS = {
@@ -171,7 +172,7 @@ class Game:
         self.chests = []
 
     def show_player_inventory(self):
-        print(player.show_inventory())
+        print(self.player.show_inventory())
 
     def add_chest(self, chest):
         """
@@ -183,6 +184,7 @@ class Game:
 
     def show_chests(self):
         """
+        *** STUDENT TO IMPLEMENT ***
         Prints a list of the chest contents to the screen.
         :return: None
         """
@@ -208,15 +210,16 @@ class Game:
 
     def loot_chests(self):
         """
+        *** STUDENT TO IMPLEMENT ***
         For each chest in the game, determine the optimal content to remove [0-1] knapsack
         and add the item to the adventurers inventory.
         Chests may still have contents remaining after looting.
 
         Note after looting each chest, the remaining carry weight of the adventurer will be
-        reduced.  The adventurer does NOT have to select the optional ORDER of looting chests
-        if there are more than one.  For example if the first chest contains 100 lbs of clothes
+        reduced.  The adventurer does NOT have to select the optimal ORDER of looting chests
+        if there are more than one.  For example, if the first chest contains 100 lbs of clothes
         and the second contains 100 lbs of jewels, if the adventurer loots the clothing chest
-        first, then the opportunity to loot the jewels will be missed.
+        first, then the opportunity to loot the jewels will be missed, and that is ok.
 
         :return: None
         """
@@ -224,6 +227,7 @@ class Game:
 
     def sell_items(self):
         """
+        *** STUDENT TO IMPLEMENT ***
         Sell items will take the entirety of the adventurers inventory, calculate its total
         value and "sell it." This will remove it all items from inventory and in return "payment"
         matching that total value will be added to the adventurer's coin_purse, consisting of the
