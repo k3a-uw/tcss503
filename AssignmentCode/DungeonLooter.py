@@ -89,36 +89,30 @@ class Item:
     simply add them to the static field Item.TYPES as shown.  This is used by the generator to create a random item.
     """
     TYPES = {
-        'dagger':
-            {
+        'dagger': {
                 'weight': (1, 5),
                 'value': (10, 100)
-            },
-        'jewels':
-            {
+        },
+        'jewels': {
                 'weight': (1, 5),
                 'value': (50, 500)
-            },
-        'clothing':
-            {
+        },
+        'clothing': {
                 'weight': (5, 10),
                 'value': (1, 50)
-            },
-        'herbs':
-            {
+        },
+        'herbs': {
                 'weight': (1, 2),
                 'value': (3, 20)
-            },
-        'gems':
-            {
+        },
+        'gems': {
                 'weight': (1, 5),
                 'value': (25, 250)
-            },
-        'armor':
-            {
+        },
+        'armor': {
                 'weight': (25, 75),
                 'value': (50, 1000)
-            }
+        }
     }
 
     def __init__(self, name, weight, value):
