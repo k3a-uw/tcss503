@@ -75,7 +75,7 @@ class RedBlackBST:
         """
         return None
 
-########### THE BELOW METHODS ARE FOR STUDENT USE AND CAN BE USED AS IS IN THE INTERATIVE IMPLEMENTATION
+########### THE BELOW METHODS ARE FOR STUDENT USE AND CAN BE USED AS IS IN THE ITERATIVE IMPLEMENTATION
 
     def _flip_colors(self, node):
         """Using the provided `node`, set both child links to black, and set the parent link to `Red`.
