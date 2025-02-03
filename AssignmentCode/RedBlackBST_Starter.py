@@ -220,10 +220,11 @@ class RedBlackBST:
 ########### END RECURSIVE SECTION
 
 class TestRedBlackBST:
-    def __init__(self):
+    def __init__(self, student_module):
         self.test_keys = [10, 6, 2, 5, 4, 1, 7, 3, 9, 8]
         self.test_values = ['ten', 'six', 'two', 'five', 'four', 'one', 'seven', 'three', 'nine', 'eight']
         self.results = []
+        self.module = student_module
 
     def assert_condition(self, test_title, condition, failure_message, possible_points=1, penalty=-1):
         """Helper function to log test results"""
@@ -236,7 +237,7 @@ class TestRedBlackBST:
         """ Checks to make sure the class is named correctly and that the necessary functions are named correctly and
         that a bst can be instantiated without error. """
         try:
-            bst = RedBlackBST()
+            bst = self.module()
         except NameError:
             self.results.append(('0.*: All Pre-Tests Failed.', False, "RedBlackBST class is Not defined", 50, -50))
             return
@@ -248,8 +249,8 @@ class TestRedBlackBST:
             self.assert_condition('0.2 RedBlackBST Can be instantiated.', True, '', 1, -1)
 
         self.assert_condition('0.3 insert_i method exists', hasattr(bst, 'insert_i') and callable(getattr(bst, 'insert_i', None)), 'insert_i method is missing or not callable.', 1,-1)
-        self.assert_condition("0.4a rotate_left_i method existence", hasattr(bst, '_rotate_left_i') and callable(getattr(bst, '_rotate_left_i', None)), "_rotate_left_i method is missing or not callable.", 1, -2)
-        self.assert_condition("0.4b rotate_right_i method existence", hasattr(bst, '_rotate_right_i') and callable(getattr(bst, '_rotate_right_i', None)), "_rotate_right_i method is missing or not callable.", 1, -2)
+        self.assert_condition("0.4a rotate_left_i method existence", hasattr(bst, '_rotate_left_i') and callable(getattr(bst, '_rotate_left_i', None)), "_rotate_left_i method is missing or not callable.", 1, -1)
+        self.assert_condition("0.4b rotate_right_i method existence", hasattr(bst, '_rotate_right_i') and callable(getattr(bst, '_rotate_right_i', None)), "_rotate_right_i method is missing or not callable.", 1, -1)
         self.assert_condition("0.5 search method existence", hasattr(bst, 'search') and callable(getattr(bst, 'search', None)), "search method is missing or not callable.", 1, -1)
         return bst
 
@@ -262,7 +263,7 @@ class TestRedBlackBST:
             return
 
         self.assert_condition("1.1 Root is not None", bst.root is not None, "bst.root is None after first insertion")
-        self.assert_condition("1.2 Root is not Red", bst.root and not bst.root.is_red, "bst.root is red after insertion, should be black.")
+        self.assert_condition("1.2 Root is not Red", bst.root and not bst.root.is_red, "bst.root is is_red after insertion, should be black.")
         self.assert_condition("1.3 Root Key and Value match", bst.root and bst.root.key == self.test_keys[0] and bst.root.value == self.test_values[0], "bst.root values do not match expected values.")
         self.assert_condition("1.4 Root Left Child is None", bst.root and bst.root.left is None, "bst.root.left should be None after first insertion.")
         self.assert_condition("1.5 Root Right Child is None", bst.root and bst.root.right is None, "bst.root.right should be None after first insertion.")
@@ -278,8 +279,8 @@ class TestRedBlackBST:
             return
 
         self.assert_condition("2.1 Root.Left Should not be None", bst.root and bst.root.left is not None, "bst.root.left should not be None")
-        self.assert_condition("2.2 Root.Left is connected with a red link", bst.root and bst.root.left and bst.root.left.is_red, "bst.root.left is not red")
-        self.assert_condition(f"2.3 Root.left should be Key: {self.test_keys[1]}", bst.root and bst.root.left and bst.root.left.key == self.test_keys[1], f"bst.root.left.key is {bst.root.left.key}")
+        self.assert_condition("2.2 Root.Left is connected with a is_red link", bst.root and bst.root.left and bst.root.left.is_red, "bst.root.left is not is_red")
+        self.assert_condition(f"2.3 Root.left should be Key: {self.test_keys[1]}", bst.root and bst.root.left and bst.root.left.key == self.test_keys[1], f"bst.root.left.key is not {self.test_keys[1]}")
         self.assert_condition(f"2.4 Root Key should be Key: {bst.root.key}", bst.root and bst.root.key == 10, f"bst.root.key is not 10")
         self.assert_condition(f"2.5 Root.Left.Parent should be Root", bst.root and bst.root.left and bst.root.left.parent == bst.root, "bst.root.left.parent is not bst.root")
 
@@ -299,7 +300,7 @@ class TestRedBlackBST:
         self.assert_condition("3.4 Root.Left.Parent should be Root", bst.root and bst.root.left and bst.root.left.parent == bst.root, "bst.root.left.parent is not bst.root")
         self.assert_condition("3.5 Root.Left should be connected with a black node", bst.root and bst.root.left and not bst.root.left.is_red, "bst.root.left is Red but should be Black")
         self.assert_condition("3.6 Root.Left should not have children", bst.root and bst.root.left and bst.root.left.left is None and bst.root.left.right is None, "bst.root.left has children but shouldn't")
-        self.assert_condition(f"3.7 Root.Right should be Key: {bst.root.right.key}", bst.root and bst.root.right and bst.root.right.key == self.test_keys[0], f"bst.root.right.key is not 10")
+        self.assert_condition(f"3.7 Root.Right should be Key: {self.test_keys[0]}", bst.root and bst.root.right and bst.root.right.key == self.test_keys[0], f"bst.root.right.key is not 10")
         self.assert_condition("3.8 Root.Right.Parent should be Root", bst.root and bst.root.right and bst.root.right.parent == bst.root, "bst.root.right.parent is not bst.root")
         self.assert_condition("3.9 Root.Right should be connected with a black node", bst.root and bst.root.right and not bst.root.right.is_red, "bst.root.right is Red but should be Black")
         self.assert_condition("3.10 Root.Right should not have children", bst.root and bst.root.right and bst.root.right.left is None and bst.root.right.right is None, "bst.root.right has children but shouldn't")
@@ -316,10 +317,10 @@ class TestRedBlackBST:
 
         self.assert_condition(f"4.1 Root.parent should be None", bst.root and bst.root.parent is None, "bst.root.parent is not None")
         self.assert_condition(f"4.2 Root.key should be {self.test_keys[1]}", bst.root and bst.root.key == self.test_keys[1], f"bst.root.key is not {self.test_keys[1]}")
-        self.assert_condition(f"4.3 Root.Left Should be {self.test_keys[3]}", bst.root and bst.root.left.key == self.test_keys[3], f"bst.root.left.key is not {self.test_keys[3]}")
+        self.assert_condition(f"4.3 Root.Left Should be {self.test_keys[3]}", bst.root and bst.root.left and bst.root.left.key == self.test_keys[3], f"bst.root.left.key is not {self.test_keys[3]}")
         self.assert_condition("4.4 Root.left should be black", bst.root and bst.root.left and not bst.root.left.is_red, "bst.root.left is not black")
         self.assert_condition("4.5 Root.right should be black", bst.root and bst.root.right and not bst.root.right.is_red, "bst.root.right is not black")
-        self.assert_condition("4.6 Root.left.left should be red", bst.root and bst.root.left and bst.root.left.left and bst.root.left.left.is_red, "bst.root.left.left is not red")
+        self.assert_condition("4.6 Root.left.left should be is_red", bst.root and bst.root.left and bst.root.left.left and bst.root.left.left.is_red, "bst.root.left.left is not is_red")
         self.assert_condition(f"4.7 Root.Left.Left Should be {self.test_keys[2]}", bst.root and bst.root.left and bst.root.left.left and bst.root.left.left.key == self.test_keys[2], f"bst.root.left is not {self.test_keys[2]}")
         self.assert_condition("4.8 Root.Left.Right Should be None", bst.root and bst.root.left and bst.root.left.right is None, f"bst.root.left.right is not none.")
         self.assert_condition("4.9 Root.Left.Left.Left Should be none", bst.root and bst.root.left and bst.root.left.left and bst.root.left.left.left is None, "bst.root.left.left.left is not None")
@@ -337,7 +338,7 @@ class TestRedBlackBST:
             return
 
         self.assert_condition(f"5.1 Root should still be {self.test_keys[1]}", bst.root and bst.root.key == self.test_keys[1], f"bst.root is not {self.test_keys[1]}")
-        self.assert_condition("5.2 Root.left should be red.", bst.root and bst.root.left and bst.root.left.is_red, "bst.root.left is not red")
+        self.assert_condition("5.2 Root.left should be is_red.", bst.root and bst.root.left and bst.root.left.is_red, "bst.root.left is not is_red")
         self.assert_condition(f"5.3 Root.left should be {self.test_keys[4]}", bst.root and bst.root.left and bst.root.left.key == self.test_keys[4], f"bst.left.key is not {self.test_keys[4]}")
         self.assert_condition("5.4 Root.Left.Left Should be Black", bst.root and bst.root.left and bst.root.left.left and not bst.root.left.left.is_red, "bst.root.left.left is NOT black.")
         self.assert_condition("5.5 Root.Left.Left.Parent should be Root.Left", bst.root and bst.root.left and bst.root.left.left and bst.root.left.left.parent == bst.root.left, "bst.root.left.left.parent is not bst.root.left")
@@ -352,18 +353,19 @@ class TestRedBlackBST:
             bst.insert_i(self.test_keys[9], self.test_values[9])
         except Exception as e:
             self.results.append(("6.* All Tests have Failed.", False, f"Exception {e}", 7, -7))
+            return
 
         self.assert_condition(f'6.1 Root Should be {self.test_keys[4]}', bst.root and bst.root.key == self.test_keys[4], f"bst.root is not {self.test_keys[4]}")
         self.assert_condition(f'6.2 First Level (Left and Right) should be {self.test_keys[2]} and {self.test_keys[8]} respectively',
                               bst.root and bst.root.left and bst.root.left.key == self.test_keys[2] and bst.root.right and bst.root.right.key == self.test_keys[8], "bst.root.left and/or bst.root.right are incorrect.")
         self.assert_condition('6.3 Root.Right.Left Should be a Red Link',
-                              bst.root and bst.root.right and bst.root.right.left and bst.root.right.left.is_red, "bst.root.right is not red")
+                              bst.root and bst.root.right and bst.root.right.left and bst.root.right.left.is_red, "bst.root.right is not is_red")
         self.assert_condition('6.4 Root.Right.Left.Right Should be a Red Link',
-                              bst.root and bst.root.right and bst.root.right.left and bst.root.right.left.right and bst.root.right.left.right.left and bst.root.right.left.right.left.is_red, "bst.root.right is not red")
+                              bst.root and bst.root.right and bst.root.right.left and bst.root.right.left.right and bst.root.right.left.right.left and bst.root.right.left.right.left.is_red, "bst.root.right is not is_red")
 
         self.assert_condition('6.5 Root.Left.Left should be a black link', bst.root and bst.root.left and bst.root.left.left and not bst.root.left.left.is_red, "bst.root.left is not black")
         self.assert_condition('6.6 Root.Right.Left.Parent should be Root.Right', bst.root and bst.root.right and bst.root.right.left and bst.root.right.left.parent == bst.root.right, "bst.root.right.left's parent is incorrect.")
-        self.assert_condition('6.7 Root Note should be black.', bst.root and not bst.root.is_red, "bst.root is red.  It should always be black.")
+        self.assert_condition('6.7 Root Note should be black.', bst.root and not bst.root.is_red, "bst.root is is_red.  It should always be black.")
 
         return bst
 
@@ -376,7 +378,7 @@ class TestRedBlackBST:
             bst.insert_i(self.test_keys[0], test_value)
             second_search = bst.search(self.test_keys[0])
         except Exception as e:
-            self.results.append(("7.* All Tests have Failed.", False, f"Exception {e}", 5, -5))
+            self.results.append(("7.* All Tests have Failed.", False, f"Exception {e}", 2, -2))
             return
 
         self.assert_condition(f"7.1 First Search should return {self.test_values[0]}", first_search == self.test_values[0], f"bst.value is not {self.test_values[0]}")
@@ -405,6 +407,8 @@ class TestRedBlackBST:
             bst = self.test_insertion_sixth_final_structure(bst)
         if bst:
             bst = self.test_search_and_update(bst)
+        else:
+            self.results.append(("7.* All Tests have Failed.", False, f"Prior required tests failed.", 2, -2))
 
         if not bst:
             print("Failure to run all test cases.  Look closely at your results.")
@@ -450,6 +454,6 @@ class TestRedBlackBST:
 
 
 if __name__ == "__main__":
-    tester = TestRedBlackBST()
+    tester = TestRedBlackBST(RedBlackBST)
     bst = tester.run_tests()
     tester.print_results()
