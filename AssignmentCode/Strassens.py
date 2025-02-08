@@ -34,6 +34,9 @@ def recursive_matrix_mult(A, B):
     return np.vstack((top, bottom))
 
 def basic_smoke_test():
+    """
+    Calls strassens and throws `AssertionException` if calculations are not performed as expected.
+    """
     smoke1 = [[1, 2], [3, 4]]
     smoke2 = [[5, 6], [7, 8]]
     result = strassens(smoke1, smoke2)
