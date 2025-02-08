@@ -36,7 +36,7 @@ def recursive_matrix_mult(A, B):
 def basic_smoke_test():
     smoke1 = [[1, 2], [3, 4]]
     smoke2 = [[5, 6], [7, 8]]
-    result = recursive_matrix_mult(smoke1, smoke2)
+    result = strassens(smoke1, smoke2)
     expected = np.array([[19, 22], [43, 50]])
     assert(np.array_equal(result, expected))
     print("First test passed")
