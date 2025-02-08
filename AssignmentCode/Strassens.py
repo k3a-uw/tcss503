@@ -33,7 +33,6 @@ def recursive_matrix_mult(A, B):
 
     return np.vstack((top, bottom))
 
-
 def basic_smoke_test():
     smoke1 = [[1, 2], [3, 4]]
     smoke2 = [[5, 6], [7, 8]]
@@ -48,6 +47,20 @@ def basic_smoke_test():
     assert(np.array_equal(result, expected))
     print("Second test passed")
 
+## THE STUDENT SHOULD IMPLEMENT STRASSENS MATRIX MULTIPLICATION ALGORITHM
+def strassens(A, B):
+    """
+    Uses Strassen’s method for matrix multiplication to return the product of the two
+    provided Matrices A and B.
+    :param A: the first matrix to multiply. Implemented as a np.array
+    :param B: The second matrix to multiply. Implemented as a np.array
+    :return: The product of A and B
+    """
+    pass
+
+
 
 if __name__ == "__main__":
+    # NOTE THIS IS JUST A BASIC SMOKE TEST.  TO RUN THE FULL TEST SUITE THAT WILL BE USED FOR GRADING USE THE INCLUDED
+    # StrassensTester.py.  RUN StrassensTester.py WITH THE PROPER IMPORT STATEMENT IN LINE 2 TO SEE THE RESULTS.
     basic_smoke_test()
