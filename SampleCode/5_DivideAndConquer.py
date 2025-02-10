@@ -1,6 +1,7 @@
 import numpy as np
 import time
 import matplotlib.pyplot as plt
+import seaborn as sns
 import random
 
 
@@ -125,10 +126,12 @@ def closest_pair_dc(p):
     if len(p) <= 3:
         return closet_pair_bf(p)
 
+    # FIND THE MIDPOINT AND RECURSIVELY SOLVE ON THE LEFT AND RIGHT SIDE.
     mid = len(p) // 2
     dl = closest_pair_dc(p[:mid])
     dr = closest_pair_dc(p[mid:])
 
+    # DETERMINE WHICH IS THE MIN DISTANCE TO SET "D", CAPTURE THE POINTS AS KNOWN CLOSET PAIR FOR NOW.
     if dl[0] < dr[0]:
         d = dl[0]
         min_points = dl[1]
@@ -136,15 +139,21 @@ def closest_pair_dc(p):
         d = dr[0]
         min_points = dr[1]
 
+    # PUT THE X_Q LINE (m) ON THE MIDPOINT OF X.
     m = p[mid][0]
 
+    # FOR EACH POINT IN P ADD ANY WHOSE X VALUE IS WITHIN d OF THE BOUNDARY LINE (X_Q IN THE SLIDES)
     S = []
     for point in p:
-        if abs(point[0] - m) < d:
+        if abs(point[0] - m) < d:  # m represents the x value of the vertical line X_Q from the slides.
             S.append(point)
 
+    # SORT THE SET BY Y VALUES SO WE CAN START FROM THE BOTTOM AND ONLY CHECK THINGS NEAR IT.
     S.sort(key=lambda y: y[1])
+
     min_dist = d
+
+    # FOR EVERY POINT, STARTING WITH THE LOWEST Y, COMPARE UPWARDS ONLY.
     for i in range(len(S)):
         for j in range(i+1, len(S)):
             if S[j][1]-S[i][1] >= d:  # WE ARE COMPARING TOO HIGH, GO TO NEXT POINT
@@ -161,7 +170,23 @@ def clostest_pair(p):
     return dist**0.5, the_points
 
 
+def plot_points(title, all_points, closest_points, min_dist):
+    x_values, y_values = zip(*all_points)
+    x_red, y_red = zip(*closest_points)
 
+
+    # Create scatter plot
+    sns.set_theme(style="darkgrid")
+    plt.figure(figsize=(8, 6))  # Adjust figure size
+    plt.scatter(x_values, y_values, color='dodgerblue', s=100, edgecolor='black', label='Normal Points', alpha=0.4)
+    plt.scatter(x_red, y_red, color='red', s=150, edgecolor='black', label='Closest Pair', alpha=0.4)
+
+    # Customize plot aesthetics
+    plt.title(f"Closest Pair of Points (Dist: {min_dist:0.1f})", fontsize=16, weight='bold')
+
+
+    # Show the plot
+    plt.show()
 
 if __name__ == "__main__":
     a = [[1, 2, 5],
@@ -183,18 +208,33 @@ if __name__ == "__main__":
     print("Expected Results:\n", expected_results)
 
 
-points = [(1, 10),
-          (5, 12),
-          (7, 43),
-          (2, 2),
-          (6, 6),
-          (8, 9),
-          (0, 10),
-          (1, 3),
-          (2, 5),
-          (6, 10),
-          (19, 20)]
+    points = [(1, 10),
+              (5, 12),
+              (7, 43),
+              (2, 2),
+              (6, 6),
+              (8, 9),
+              (0, 10),
+              (1, 3),
+              (2, 5),
+              (6, 10),
+              (19, 20)]
+
+    x, p = clostest_pair(points)
+
+    plot_points("Simple: 10 Points", points, p, x)
 
 
-x, p = clostest_pair(points)
-print(f"The min dist = {x} in points {p[0]} and {p[1]}")
+    # TUNE THE SECOND CHART WITH DIFFERENT RANGES AND COUNTS OF POINTS.
+    MIN_VAL = 0
+    MAX_VAL = 1000
+    NUM_POINTS = 100
+
+    more_points = {(random.randint(MIN_VAL, MAX_VAL), random.randint(MIN_VAL, MAX_VAL)) for _ in range(NUM_POINTS)}
+
+    x2, p2 = clostest_pair(more_points)
+
+    plot_points("Random Points", more_points, p2, x2)
+
+
+
