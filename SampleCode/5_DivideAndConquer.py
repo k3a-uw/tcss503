@@ -116,6 +116,12 @@ def closet_pair_bf(p):
     return min_dist, min_points
 
 def closest_pair_dc(p):
+    """
+    Recursively solves the Closest Pair Algorithm
+    :param p A list of tuples pre-sorted by X (first element of the tuple)
+    :return: A tuple containing the minimum distance as the first element.  The second element is a tuple containing the
+    two points that are closest together.
+    """
     if len(p) <= 3:
         return closet_pair_bf(p)
 
