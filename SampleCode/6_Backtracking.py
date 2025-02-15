@@ -39,6 +39,26 @@ class NQueens:
         print(f"{self.solutions} Solutions Found")
         return
 
+    def solve_recursive(self):
+        # SETUP THE INITIAL EMPTY SOLUTION
+        solution = [-1 for _ in range(self.size)]
+
+        # START TO SOLVE THE EMPTY SOLUTION BY PLACING A QUEEN IN ROW 0
+        return self._solve(solution, 0)
+
+    def _solve(self, solution, row):
+        # TRY TO PLACE A QUEEN IN EACH COLUMN
+        for col in range(self.size):
+            if self.can_place(solution, col): # IF I CAN, ADD IT TO SOLUTION AND THEN CALL ON NEXT ROW.
+                solution[row] = col
+                if row + 1 == self.size:    # WE HIT OUR GOAL AND PLACED THE LAST ONE.
+                    return solution
+                result = self._solve(solution.copy(), row + 1) # TRY TO SOLVE THE NEXT ROW WITH THIS NEW SOLUTION.
+                if result:
+                    return result
+            # IF YOU CANNOT PLACE, JUST GO TO THE NEXT COLUMN.
+        # IF YOU ARE HERE, YOU HAVE TRIED TO PLACE ALL QUEENS IN THAT ROW UNSUCCESSFULLY SO JUST RETURN NONE
+
     def can_place(self, solution, col):
         num_rows = sum(x != -1 for x in solution)
         for row in range(num_rows):
@@ -51,6 +71,9 @@ class NQueens:
         return True
 
     def draw_board(self, solution):
+        if not solution:
+            return "[No Solution Provided]"
+
         board = ""
         for r in range(self.size):
             board += f"{r}: "
@@ -130,6 +153,16 @@ if __name__ == "__main__":
 
 
 
-    # SOLVE THE N QUEENS PROBLEM
-    b = NQueens(size=15)
+    print("\n\n")
+    # USE THE RECURSIVE VERSION TO GET JUST ONE OF THE ANSWERS.
+    print("Recursive Call to get one solution quickly.:")
+    x = NQueens(size=10)
+    results = x.solve_recursive()
+    print(x.draw_board(results))
+
+
+    print("\n\n Iterative Call to get all solution.")
+    # SOLVE THE N QUEENS PROBLEM USE ITERATIVE APPROACH TO GET ALL SOLUTIONS.
+    b = NQueens(size=5)
     b.find_solution(find_all=True)
+
