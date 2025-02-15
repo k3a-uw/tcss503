@@ -9,9 +9,10 @@ class NQueens:
     def __init__(self, size):
         self.size = size
         self.solution_stack = []
-        self.solutions = 0
+        self.all_solutions = []
 
     def find_solution(self, find_all=True):
+        self.all_solutions.clear()
         self.solutions = 0
         for col in range(self.size):
             solution = [-1 for _ in range(self.size)]
@@ -28,8 +29,8 @@ class NQueens:
                     if curr_row + 1 == self.size:
                         print("Found Solution!")
                         print(self.draw_board(new_solution))
+                        self.all_solutions.append(new_solution)
                         if find_all:
-                            self.solutions += 1
                             break
                         else:
                             return
@@ -84,6 +85,12 @@ class NQueens:
                     board += "| "
             board += "|\n"
         return board
+
+    def draw_all_solutions(self):
+        print(f"Drawing all {len(self.all_solutions)} solutions...")
+        for solution in self.all_solutions:
+            print(self.draw_board(solution))
+
 
 
 class MatrixGraph:
@@ -156,7 +163,7 @@ if __name__ == "__main__":
     print("\n\n")
     # USE THE RECURSIVE VERSION TO GET JUST ONE OF THE ANSWERS.
     print("Recursive Call to get one solution quickly.:")
-    x = NQueens(size=10)
+    x = NQueens(size=8)
     results = x.solve_recursive()
     print(x.draw_board(results))
 
