@@ -166,7 +166,8 @@ def closest_pair_dc(p):
     return min_dist, min_points
 
 def clostest_pair(p):
-    dist, the_points = closest_pair_dc(sorted(p, key=lambda x: x[0]))
+    sorted_points = sorted(p, key=lambda x: x[0])
+    dist, the_points = closest_pair_dc(sorted_points)
     return dist**0.5, the_points
 
 
@@ -228,7 +229,7 @@ if __name__ == "__main__":
     # TUNE THE SECOND CHART WITH DIFFERENT RANGES AND COUNTS OF POINTS.
     MIN_VAL = 0
     MAX_VAL = 1000
-    NUM_POINTS = 100
+    NUM_POINTS = 1000
 
     more_points = {(random.randint(MIN_VAL, MAX_VAL), random.randint(MIN_VAL, MAX_VAL)) for _ in range(NUM_POINTS)}
 
